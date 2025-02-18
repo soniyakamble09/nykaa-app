@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block 'main' %}
+
+    <div class="col-md-2 mt-2">
+    <h5>Filter by price range</h5>
+    <hr>
+    <form action="/range">
+        <div class="mb-3">
+            <label for="input1" class="form-label">Min value:</label>
+            <input type="number" name="min" class="form-control" id="input1" placeholder="minimum value" />
+        </div>
+        <div class="mb-3">
+            <label for="input2" class="form-label">Max value:</label>
+            <input type="number" name="max" class="form-control" id="input2" placeholder="maximum value" />
+        </div>
+        <div class="mb-3">
+            <input type="submit" class="btn btn-danger" value="Submit" />
+        </div>
+    </form>
+    <h5>Sort by price</h5>
+    <hr>
+    <p><a href="/sort/0" class="anchor">Low to High</a></p>
+    <p><a href="/sort/1" class="anchor">High to Low</a></p>
+    </div>
+
+    {% for x in products %}
+    <div class="col-md-2 mt-2">
+        <div class="card" style="width: 100%;">
+            <img src="{{x.pimage.url}}" class="card-img-top" height="300px" alt="..." />
+            <div class="card-body">
+                <h5 class="card-title">{{x.name}}</h5>
+                <p class="card-text">Rs. {{x.price}}</p>
+                <p class="card-text">{{x.get_cat_display}}</p>
+                <a href="/product/{{x.id}}" class="btn btn-danger">See Details</a>
+            </div>
+        </div>
+    </div> 
+    {% endfor %}
+    <div class="col-md-2 mt-2">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" width="400" height="225" 
+                      src="https://www.youtube.com/embed/x0LR8aG9m54?autoplay=1&mute=1"
+                      title="I’m a Nykaa Everyday – Natania feat. Dee MC | Official Anthem Music Video"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen>
+              </iframe>
+          </div>
+      </div>
+    </div> 
+{% endblock 'main' %}

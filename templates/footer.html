@@ -1,0 +1,33 @@
+{% load static %}
+</div>
+</div> <!-- products ends -->
+    <!-- Footer starts -->
+    <nav class="navbar fixed-bottom navbar-light">
+        <div class="container-fluid">
+            <div class="d-inline-flex bd-highlight mt-2">
+                <p><b>Quick Links: &nbsp;&nbsp;</b>
+                <p><b><a href="/" class="anchor">Home</a></b>&nbsp;&nbsp;</p>
+                {% if user.is_authenticated %}
+                <p><b><a href="/viewcart" class="anchor">Cart</a></b>&nbsp;&nbsp;</p>
+                {% endif %}
+                <p><b><a href="/about" class="anchor">About</a></b>&nbsp;&nbsp;</p>                
+                <p><b><a href="/contact" class="anchor">Contact</a></b>&nbsp;&nbsp;</p>
+            </div>
+            <div class="d-inline-flex bd-highlight mt-2">
+                <p><b>Address: &nbsp;&nbsp;</b>Panvel, Raigad - 410206 &nbsp;&nbsp;
+                <p><i class="bi bi-telephone-fill text-danger"></i> : 9999999999</p>&nbsp;&nbsp;
+                <p><i class="bi bi-envelope-fill text-danger"></i> : anonymous@gmail.com</p>
+            </div>
+            <div class="d-inline-flex bd-highlight mt-2">
+                <p><b>Contact Us: &nbsp;&nbsp;</b>
+                <h5><a href="https://www.facebook.com/" class="btn btn-primary"><i class="bi bi-facebook"></i></a></h5>
+                <h5><a href="https://www.instagram.com/" class="btn btn-danger"><i class="bi bi-instagram"></i></a></h5>
+                <h5><a href="https://www.twitter.com/" class="btn btn-primary"><i class="bi bi-twitter"></i></a></h5>
+                <h5><a href="https://www.linkedin.com/" class="btn btn-danger"><i class="bi bi-linkedin"></i></a></h5>
+            </div>
+        </div>
+    <!-- Footer ends -->
+</nav>     <!-- Navigation container end -->
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
