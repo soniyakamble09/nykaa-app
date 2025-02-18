@@ -182,18 +182,18 @@ def placeorder(request):
     for key in keys_to_remove:
         context.pop(key, None) 
     c=Cart.objects.filter(uid=request.user.id)
-    # try:
-    #     order_id = context['order_id']
-    #     print('order_id is:',order_id)
-    #     if order_id is None:
-    #         order_id = generate_order_id()
-    #     print('order_id is:',order_id)
-    # except:
-    #     order_id = generate_order_id()
-    #     context['order_id catch']=order_id
+    try:
+        order_id = context['order_id']
+        print('order_id is:',order_id)
+        if order_id is None:
+            order_id = generate_order_id()
+        print('order_id is:',order_id)
+    except:
+        order_id = generate_order_id()
+        context['order_id catch']=order_id
 
     for x in c:
-        o=Order.objects.create(uid=x.uid,pid=x.pid,qty=x.qty)
+        o=Order.objects.create(uid=x.uid,pid=x.pid,qty=x.qty,order_id=order_id)
         o.save()
         x.delete()
     q1=Q(uid=request.user.id)
@@ -224,15 +224,21 @@ def makepayment(request):
     o=Order.objects.filter(q1 & q2)
     
     total_price = sum(item.pid.price*item.qty for item in o)
-    client = razorpay.Client(auth=("rzp_test_pjmfONoAV5hhRJ", "2qLFlWxOv0vaA1jxWEEHwbcA"))
-    data = { "amount": total_price*100, "currency": "INR", "receipt": o[0].order_id }
-    payment = client.order.create(data=data)
-    context['data']=payment
 
-    for x in o:
-        x.is_deleted = True
-        x.save()
-    return render(request, 'pay.html', context)
+    context['data']=[]
+    try:
+        client = razorpay.Client(auth=("rzp_test_pjmfONoAV5hhRJ", "2qLFlWxOv0vaA1jxWEEHwbcA"))
+        data = { "amount": total_price*100, "currency": "INR", "receipt": o[0].order_id }
+        payment = client.order.create(data=data)
+        context['data']=payment
+    finally:
+        for x in o:
+            x.is_deleted = True
+            x.save()
+        keys_to_remove = ['order_id']
+        for key in keys_to_remove:
+            context.pop(key, None) 
+        return render(request, 'pay.html', context)
 
 def sendusermail(request):
     keys_to_remove = ['success', 'errmsg']
